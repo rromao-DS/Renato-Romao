@@ -1,0 +1,7 @@
+{
+  "description": "Compra de material de escritório",
+  "amount": 250.00,
+  "vendor": "Papelaria ABC",
+  "date": "2026-09-19",
+  "payment_method": "cartão"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "sucesso",
+  "categorized_expense": {
+    "description": "Compra de material de escritório",
+    "amount": 250.00,
+    "category": "6.1.1.02",
+    "category_name": "Material de Consumo"
+  }
+}
