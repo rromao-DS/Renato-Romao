@@ -1,64 +1,69 @@
-<p align="center">
-    <img width="200" src="https://github.com/rromao-DS/Renato-Romao/blob/main/Imagem.png">
-</p>
+# R2 Consultoria - Automação e Integração Claude
 
-<h1> Hello Fellow Data Scientists! <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width = 30px> </h1>
-<p align='center'>
-</p>
+Plataforma de skills reutilizáveis para automação de processos em escritórios de contabilidade e gestão.
 
+## 📋 Visão Geral
 
-<div size='20px'> Hi! My name is Renato Romão. Thank You for taking the time to view my GitHub Profile :smile: 
-</div>
+Este projeto desenvolve e mantém skills Claude especializados em:
+- **Processamento de Notas Fiscais** (NF-e, NFS-e)
+- **Rastreamento de Despesas** (categorizações automáticas)
+- **Reconciliação Bancária** (matching de transações)
+- **Cálculo de Impostos** (apuração de ICMS, PIS, COFINS, IR)
+- **Automações de Email** (integração com sistemas)
 
- 
-<h2> About Me <img src = "https://media0.giphy.com/media/KDDpcKigbfFpnejZs6/giphy.gif?cid=ecf05e47oy6f4zjs8g1qoiystc56cu7r9tb8a1fe76e05oty&rid=giphy.gif" width = 100px></h2>
+## 🏗️ Arquitetura
 
-<img width="55%" align="right" alt="Github" src="https://raw.githubusercontent.com/onimur/.github/master/.resources/git-header.svg" />
+```
+skills/
+├── accounting/          # Skills específicos de contabilidade
+│   ├── nf-processing/   # Processamento de notas fiscais
+│   ├── expense-tracking/# Rastreamento de despesas
+│   ├── reconciliation/  # Conciliação bancária
+│   └── tax-calculation/ # Cálculo de impostos
+├── automation/          # Automações gerais
+│   └── email-integration/
+└── shared/              # Código compartilhado
+    └── utils/
 
-- 🔭 I’m currently working on  my masters at PUC-Rio in Data Science and Analytics
-  
-- 🌱 I’m currently learning Git, GitHub, Python, Machine Learning, SQL, Digital & Design Thinkin and Business Metrics
-  
-- 👨‍💻 I’m looking to collaborate on Proyectos
-  
-- 💬 Ask me about Sql, Python, Tableau, Git
-  
-- ⚡ Fun fact: I love dancing.
+clients/                # Configurações por cliente
+docs/                   # Documentação e templates
+```
 
-<h2> Skills <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width = 32px> </h2>
-<a href= https://github.com/Aditya664?tab=repositories&q=&type=&language=python&sort= > <img width ='32px' src ='https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/python.svg'> </a>
+## 🚀 Quick Start
 
-<a href= https://github.com/Aditya664?tab=repositories&q=&type=&language=scikit&sort= > <img width ='32px' src ='https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/scikit.svg'> </a>
- ='https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/cpp.svg'> </a>
-<a href= https://github.com/Aditya664?tab=repositories&q=&type=&language=sqlite&sort= > <img width ='32px' src ='https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/sqlite.svg'> </a>
-<a href= https://github.com/Aditya664?tab=repositories&q=&type=&language=pytorch&sort= > <img width ='32px' src ='https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/pytorch.svg'> </a>
-='https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/html.svg'> </a>
-<a href= https://github.com/Aditya664?tab=repositories&q=&type=&language=android&sort= > <img width ='32px' src ='https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/android.svg'> </a>
-<a href= https://github.com/Aditya664?tab=repositories&q=&type=&language=csharp&sort= > <img width ='32px' src ='https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/csharp.svg'> </a>
+1. **Explorar um skill existente:**
+   ```bash
+   ls -la skills/accounting/nf-processing/
+   ```
 
+2. **Adaptar skill para novo cliente:**
+   - Copiar skill base
+   - Customizar `config.json`
+   - Testar com dados do cliente
 
-<h2> Connect with me <img src='https://raw.githubusercontent.com/ShahriarShafin/ShahriarShafin/main/Assets/handshake.gif' width="100px"> </h2>
-<a href = 'https://www.linkedin.com/in/aditya-deshmukh-561a371a8'> <img width = '32px' align= 'center' src="https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/linked-in-alt.svg"/></a> 
-<a href = 'https://www.twitter.com/NoobCoder07'> <img width = '32px' align= 'center' src="https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/twitter.svg"/></a> 
-<a href = 'https://medium.com/@adityadeshmukh7350'> <img width = '32px' align= 'center' src="https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/medium.svg"/></a> 
-<a href = 'http://aditya664.me/'> <img width = '32px' align= 'center' src="https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/portfolio.png"/></a> 
-<a href = 'https://www.github.com/Aditya664'> <img width = '32px' align= 'center' src="https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/github.svg"/></a>
-  
-<br>
-<br>
-  <br>
-  
-[![Aditya's GitHub Activity Graph](https://activity-graph.herokuapp.com/graph?username=Aditya664&theme=tokyonight)](https://git.io/praveenscience)
+3. **Criar novo skill:**
+   - Usar template em `docs/TEMPLATE.md`
+   - Seguir estrutura padrão
+   - Documentar em `README.md` local
 
-| ![Aditya's github stats](https://github-readme-stats.vercel.app/api?username=Aditya664&show_icons=true&theme=tokyonight) | ![Aditya GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=Aditya664&theme=tokyonight) |
-| --- | --- |
-| ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Aditya664&theme=tokyonight) | ![Github Stars](https://github-readme-stats.vercel.app/api?username=Aditya664&show_icons=true&locale=en&count_private=true&hide_rank=true&custom_title=My%20GitHub%20Stats&disable_animations=true&theme=tokyonight) |
+## 📚 Documentação
 
-![Jokes Card](https://readme-jokes.vercel.app/api?theme=tokyonight)
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Design de sistema
+- [SKILLS_GUIDE.md](docs/SKILLS_GUIDE.md) - Como criar/adaptar skills
+- [ONBOARDING.md](docs/ONBOARDING.md) - Guia de onboarding para clientes
+- [TEMPLATE.md](docs/TEMPLATE.md) - Template para novo skill
 
+## 👥 Parceria
 
-<br>
+- **Leandro Augusto** - Consultoria de Processos
+- **Contadores Parceiros** - Feedback e casos de uso
 
+## 📊 Clientes
 
------
-Credits: [Aditya Deshmukh](https://github.com/Aditya664)
+| Cliente | Skills Ativos | Status |
+|---------|--------------|--------|
+| (em desenvolvimento) | - | - |
+
+---
+
+**Última atualização:** 2026-09-19
