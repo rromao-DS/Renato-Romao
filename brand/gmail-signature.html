@@ -111,7 +111,7 @@
 <script>
 const DATA = {
   email:    'r2techconsultoria@gmail.com',
-  phone:    '+55 21 9 7040-8313',
+  phone:    '97 040-8313',
   linkedin: 'linkedin.com/in/renato-romao',
   name:     'Renato Romão',
   role:     'Fundador & Consultor',
@@ -152,8 +152,8 @@ const PALETTES = [
 
 let active = 0;
 
-function logoSVG(fill, size) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="${size}" height="${size}" style="display:block">
+function logoSVG(fill, w, h) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 78 220 94" width="${w}" height="${h}" style="display:block">
     <rect x="20" y="85" width="70" height="70" fill="${fill}"/>
     <rect x="150" y="85" width="70" height="70" fill="${fill}"/>
     <line x1="90" y1="125" x2="150" y2="101" stroke="${fill}" stroke-width="15" stroke-linecap="round"/>
@@ -161,37 +161,44 @@ function logoSVG(fill, size) {
 }
 
 function buildSig(p, forCopy) {
-  const style = forCopy
-    ? `background:${p.bg};padding:24px 28px;display:inline-block`
-    : `background:${p.bg};border-radius:10px;padding:24px 28px`;
+  const wrap = forCopy
+    ? `background:${p.bg};padding:20px 24px;display:inline-block`
+    : `background:${p.bg};border-radius:10px;padding:20px 24px`;
 
-  return `<div style="${style}">
-<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,'Helvetica Neue',sans-serif">
+  return `<div style="${wrap}">
+<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,'Helvetica Neue',sans-serif;border-collapse:collapse">
   <tr>
-    <td style="padding-bottom:16px">
+    <td style="vertical-align:middle;padding-right:0;width:88px">
       <table cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td style="padding-right:10px;vertical-align:middle">${logoSVG(p.logoFill, 44)}</td>
-          <td style="vertical-align:middle">
-            <div style="font-size:15px;font-weight:700;color:${p.fg};letter-spacing:-0.3px">${DATA.name}</div>
-            <div style="font-size:9px;font-weight:500;color:${p.sub};letter-spacing:1.8px;text-transform:uppercase;margin-top:2px">${DATA.role} · R2 TECH CONSULTING</div>
-          </td>
-        </tr>
+        <tr><td style="text-align:center">${logoSVG(p.logoFill, 80, 34)}</td></tr>
+        <tr><td style="text-align:center;padding-top:6px">
+          <span style="font-size:6.5px;font-weight:700;color:${p.accent};letter-spacing:1px;text-transform:uppercase">R2 TECH CONSULTING</span>
+        </td></tr>
       </table>
     </td>
+    <td style="vertical-align:middle;padding:0 14px">
+      <div style="width:1px;height:50px;background:${p.divider}"></div>
+    </td>
+    <td style="vertical-align:middle">
+      <div style="font-size:14px;font-weight:700;color:${p.fg};letter-spacing:-0.2px">${DATA.name}</div>
+      <div style="font-size:8.5px;font-weight:500;color:${p.sub};letter-spacing:1.4px;text-transform:uppercase;margin-top:4px">${DATA.role}</div>
+    </td>
   </tr>
-  <tr><td><div style="height:1px;background:${p.divider};margin-bottom:12px"></div></td></tr>
   <tr>
-    <td style="padding-bottom:4px">
+    <td colspan="3" style="padding:10px 0">
+      <div style="height:1px;background:${p.divider}"></div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3">
       <table cellpadding="0" cellspacing="0" border="0">
-        <tr><td style="padding-bottom:4px">
-          <a href="mailto:${DATA.email}" style="font-size:12px;color:${p.accent};text-decoration:none">${DATA.email}</a>
-        </td></tr>
-        <tr><td style="padding-bottom:4px">
-          <span style="font-size:12px;color:${p.sub}">📱 ${DATA.phone}</span>
-        </td></tr>
         <tr><td>
-          <a href="https://${DATA.linkedin}" style="font-size:12px;color:${p.fg};text-decoration:none;opacity:.85">${DATA.linkedin}</a>
+          <a href="mailto:${DATA.email}" style="font-size:10.5px;color:${p.accent};text-decoration:none">${DATA.email}</a>
+        </td></tr>
+        <tr><td style="padding-top:4px">
+          <span style="font-size:10.5px;color:${p.sub}">${DATA.phone}</span>
+          <span style="font-size:10.5px;color:${p.divider}"> · </span>
+          <a href="https://${DATA.linkedin}" style="font-size:10.5px;color:${p.fg};text-decoration:none;opacity:.8">${DATA.linkedin}</a>
         </td></tr>
       </table>
     </td>
@@ -269,7 +276,7 @@ PALETTES.forEach(p => {
   div.className = 'logo-swatch';
   div.style.background = p.bg;
   div.title = `Logo — ${p.label}`;
-  div.innerHTML = logoSVG(p.logoFill, 48);
+  div.innerHTML = logoSVG(p.logoFill, 52, 22);
   swatchesEl.appendChild(div);
 });
 
