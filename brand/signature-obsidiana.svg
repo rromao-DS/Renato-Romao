@@ -1,21 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 148" width="760" height="296">
-  <rect width="380" height="148" fill="#080C14"/>
-  <!-- Logo símbolo -->
-  <g transform="translate(20,20)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 136" width="760" height="272">
+  <rect width="380" height="136" fill="#080C14"/>
+
+  <!-- Logo símbolo (escala 44/240, topo y=14) -->
+  <g transform="translate(20,14)">
     <rect x="3.7" y="15.6" width="12.8" height="12.8" fill="#C5A880"/>
     <rect x="27.5" y="15.6" width="12.8" height="12.8" fill="#C5A880"/>
     <line x1="16.5" y1="22.9" x2="27.5" y2="18.5" stroke="#C5A880" stroke-width="2.8" stroke-linecap="round"/>
   </g>
-  <!-- Nome -->
-  <text x="74" y="34" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#F5F5F7" letter-spacing="-0.3">Renato Romão</text>
-  <!-- Empresa -->
-  <text x="74" y="49" font-family="Arial,sans-serif" font-size="11" font-weight="600" fill="#C5A880">R2 Tech Consulting</text>
-  <!-- Cargo -->
-  <text x="74" y="63" font-family="Arial,sans-serif" font-size="8.5" font-weight="500" fill="#9AA3AD" letter-spacing="1.4">FUNDADOR &amp; CONSULTOR</text>
+
+  <!-- R2 Tech Consulting abaixo da logo, alinhado à largura do símbolo -->
+  <text x="42" y="68" font-family="Arial,sans-serif" font-size="7" font-weight="700"
+        fill="#C5A880" text-anchor="middle" letter-spacing="0.3">R2 Tech</text>
+  <text x="42" y="78" font-family="Arial,sans-serif" font-size="7" font-weight="700"
+        fill="#C5A880" text-anchor="middle" letter-spacing="0.3">Consulting</text>
+
+  <!-- Nome e cargo à direita -->
+  <text x="78" y="36" font-family="Arial,sans-serif" font-size="15" font-weight="700"
+        fill="#F5F5F7" letter-spacing="-0.3">Renato Romão</text>
+  <text x="78" y="52" font-family="Arial,sans-serif" font-size="8.5" font-weight="500"
+        fill="#9AA3AD" letter-spacing="1.4">FUNDADOR &amp; CONSULTOR</text>
+
   <!-- Divider -->
-  <line x1="20" y1="79" x2="360" y2="79" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+  <line x1="20" y1="92" x2="360" y2="92" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+
   <!-- Contato -->
-  <text x="20" y="97" font-family="Arial,sans-serif" font-size="11.5" fill="#C5A880">r2techconsultoria@gmail.com</text>
-  <text x="20" y="113" font-family="Arial,sans-serif" font-size="11.5" fill="#9AA3AD">+55 21 9 7040-8313</text>
-  <text x="20" y="129" font-family="Arial,sans-serif" font-size="11.5" fill="#9AA3AD">linkedin.com/in/renato-romao</text>
+  <text x="20" y="107" font-family="Arial,sans-serif" font-size="11.5" fill="#C5A880">r2techconsultoria@gmail.com</text>
+  <text x="20" y="119" font-family="Arial,sans-serif" font-size="11.5" fill="#9AA3AD">+55 21 9 7040-8313</text>
+  <text x="20" y="131" font-family="Arial,sans-serif" font-size="11.5" fill="#9AA3AD">linkedin.com/in/renato-romao</text>
 </svg>
