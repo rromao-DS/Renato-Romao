@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 36" fill="none">
+  <!-- R2 Tech "A Ponte" — símbolo em fundo escuro -->
+  <rect x="0" y="8" width="22" height="22" fill="#C5A880"/>
+  <rect x="58" y="8" width="22" height="22" fill="#C5A880"/>
+  <line x1="22" y1="26" x2="58" y2="8" stroke="#C5A880" stroke-width="6" stroke-linecap="round"/>
+</svg>
