@@ -17,6 +17,7 @@ from uazapi import download_media, mark_read, send_presence, send_text  # noqa: 
 BUFFER_SECONDS = float(os.getenv("BUFFER_SECONDS", "8"))
 SYSTEM_PROMPT = os.getenv("SYSTEM_PROMPT", "Você é um assistente útil. Seja breve.").replace("\\n", "\n")
 PORT = int(os.getenv("PORT", "5000"))
+INSTANCE_TOKEN = os.getenv("UAZAPI_INSTANCE_TOKEN", "")
 
 app = Flask(__name__)
 _user_locks = defaultdict(threading.Lock)  # evita dois flushes simultâneos do mesmo usuário
@@ -93,6 +94,8 @@ def handle_media(number: str, msg: dict) -> None:
 def webhook():
     payload = request.get_json(silent=True) or {}
     msg = payload.get("message") or {}
+    if payload.get("token") and payload["token"] != INSTANCE_TOKEN:  # webhook global: outra instância do servidor
+        return jsonify({"ok": True})
     if (
         payload.get("EventType") != "messages"
         or msg.get("fromMe")
