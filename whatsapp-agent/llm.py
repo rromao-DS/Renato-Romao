@@ -2,7 +2,7 @@ import functools
 import os
 
 PROVIDER = os.getenv("LLM_PROVIDER", "gemini")  # "gemini" ou "claude"
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-opus-5-5")
 CLAUDE_MIMES = ("application/pdf", "image/jpeg", "image/png", "image/gif", "image/webp")
 

@@ -1,7 +1,7 @@
 # Agente de IA no WhatsApp (UAZAPI + Gemini)
 
 Aplicação Flask mínima que recebe mensagens do WhatsApp via webhook da UAZAPI, junta as mensagens
-que chegam em sequência (debounce) em um único turno, responde com o Google Gemini 2.5 Flash
+que chegam em sequência (debounce) em um único turno, responde com o Google Gemini
 e envia a resposta dividida em várias mensagens, com o indicador "digitando" entre elas.
 Tudo em memória + `threading`: sem Redis, banco ou Celery (o histórico some ao reiniciar).
 
