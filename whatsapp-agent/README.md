@@ -28,17 +28,21 @@ ngrok http 5000
 ```
 
 ## 5. Configurar o webhook na UAZAPI
-Conforme a seção "ENDPOINTS — WEBHOOK" do `llms-uazapi.txt` (`PUT /webhook`, header `token`):
+Conforme a doc oficial (https://docs.uazapi.com/reference/updateWebhook.md): `POST /webhook` com o header `token`.
+`excludeMessages: ["wasSentByApi"]` evita que o agente responda às próprias mensagens.
 ```bash
-curl -X PUT "$UAZAPI_BASE_URL/webhook" \
+curl -X POST "$UAZAPI_BASE_URL/webhook" \
   -H "token: <INSTANCE_TOKEN>" \
   -H "Content-Type: application/json" \
-  -d '{"webhookUrl": "https://SEU-NGROK.ngrok.io/webhook", "events": ["message"]}'
+  -d '{"enabled": true, "url": "https://SEU-NGROK.ngrok.io/webhook", "events": ["messages"], "excludeMessages": ["wasSentByApi"]}'
 ```
 Pronto: mande uma mensagem de outro número para o WhatsApp da instância.
 
+> Endpoints usados (doc oficial): `POST /send/text`, `POST /message/presence`, `POST /message/markread`.
+> O `llms-uazapi.txt` desta pasta está desatualizado em vários deles; na dúvida, vale a doc em https://docs.uazapi.com/llms.txt.
+
 ## Como funciona
-`POST /webhook` → ignora `fromMe`, grupos e tipos diferentes de `text` → `mark_read` → buffer por
+`POST /webhook` (`EventType=messages`) → ignora `fromMe`, grupos e tipos diferentes de texto → `mark_read` → buffer por
 usuário (espera `BUFFER_SECONDS` desde a última mensagem) → `flush`: `composing`, histórico,
 Gemini, resposta dividida por `\n\n` (blocos > 800 chars são quebrados por frase) e enviada em
 mensagens separadas, `paused` no fim.
@@ -51,9 +55,9 @@ executar a função, devolver o resultado como `part` de `function_response` no 
 modelo de novo até vir texto.
 
 ## Expandindo features
-Consulte o `llms-uazapi.txt` para:
-- receber mídia: `POST /send/download-media` (eventos `message` com `type` = image/audio/video/document)
-- enviar imagem/áudio: `POST /send/image`, `POST /send/audio`
-- botões interativos, listas e enquetes: `POST /send/menu` (respostas chegam como `button_reply`/`list_reply`)
+Consulte a doc oficial (https://docs.uazapi.com/llms.txt; o `llms-uazapi.txt` local pode estar desatualizado) para:
+- receber mídia: `POST /message/download` (eventos `messages` com `messageType` de mídia)
+- enviar imagem/áudio: `/send/media`
+- botões interativos, listas e enquetes: `POST /send/menu`
 - suporte a grupos (`isGroup`, `groupJid`) e endpoints `/group/*`
 - chatbot nativo da UAZAPI: `/chatbot/*`

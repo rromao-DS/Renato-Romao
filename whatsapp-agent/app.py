@@ -74,20 +74,20 @@ def health():
 @app.post("/webhook")
 def webhook():
     payload = request.get_json(silent=True) or {}
-    data = payload.get("data") or {}
+    msg = payload.get("message") or {}
     if (
-        payload.get("event") != "message"
-        or data.get("fromMe")
-        or data.get("isGroup")
-        or data.get("type") != "text"
-        or not data.get("body")
-        or not data.get("from")
+        payload.get("EventType") != "messages"
+        or msg.get("fromMe")
+        or msg.get("isGroup")
+        or msg.get("messageType") not in ("Conversation", "ExtendedTextMessage")
+        or not msg.get("text")
+        or not msg.get("chatid")
     ):
         return jsonify({"ok": True})
-    number = data["from"].split("@")[0]
+    number = msg["chatid"].split("@")[0]
     print(f"[webhook] message user={number}")
-    threading.Thread(target=mark_read, args=(number, data.get("id", "")), daemon=True).start()  # não bloqueia
-    buffer.add(number, data["body"])
+    threading.Thread(target=mark_read, args=(msg.get("messageid") or msg["id"],), daemon=True).start()
+    buffer.add(number, msg["text"])
     return jsonify({"ok": True})
 
 

@@ -21,8 +21,8 @@ def send_text(number: str, text: str) -> None:
 
 def send_presence(number: str, presence: str) -> None:
     """presence: 'composing' (digitando) ou 'paused'."""
-    _call("POST", "/send/presence", {"number": number, "presence": presence})
+    _call("POST", "/message/presence", {"number": number, "presence": presence})
 
 
-def mark_read(number: str, message_id: str) -> None:
-    _call("PUT", "/send/read", {"number": number, "messageId": message_id})
+def mark_read(message_id: str) -> None:
+    _call("POST", "/message/markread", {"id": [message_id]})
