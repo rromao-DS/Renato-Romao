@@ -12,14 +12,18 @@ from flask import Flask, jsonify, request  # noqa: E402
 import llm  # noqa: E402
 import memory  # noqa: E402
 from buffer import MessageBuffer  # noqa: E402
-from uazapi import mark_read, send_presence, send_text  # noqa: E402
+from uazapi import download_media, mark_read, send_presence, send_text  # noqa: E402
 
 BUFFER_SECONDS = float(os.getenv("BUFFER_SECONDS", "8"))
 SYSTEM_PROMPT = os.getenv("SYSTEM_PROMPT", "Você é um assistente útil. Seja breve.").replace("\\n", "\n")
 PORT = int(os.getenv("PORT", "5000"))
+INSTANCE_TOKEN = os.getenv("UAZAPI_INSTANCE_TOKEN", "")
 
 app = Flask(__name__)
 _user_locks = defaultdict(threading.Lock)  # evita dois flushes simultâneos do mesmo usuário
+_pending_files = defaultdict(list)  # {numero: [(caminho, mimetype)]} do buffer atual
+_files_lock = threading.Lock()
+TEXT_TYPES = ("Conversation", "ExtendedTextMessage")
 
 
 def split_reply(text: str, max_len: int = 800) -> list[str]:
@@ -45,12 +49,14 @@ def handle_flush(user: str, texts: list[str]) -> None:
     with _user_locks[user]:
         try:
             send_presence(user, "composing")
-            memory.append(user, "user", "\n".join(texts))
-            reply = llm.generate_reply(memory.get(user), SYSTEM_PROMPT)
+            with _files_lock:
+                files = _pending_files.pop(user, [])
+            memory.append(user, "user", "\n".join(texts))  # arquivos só vão no turno atual; o histórico guarda o texto
+            reply = llm.generate_reply(memory.get(user), SYSTEM_PROMPT, files=files)
             print(f"[llm] reply len={len(reply)}")
             if not reply:
                 return
-            memory.append(user, "model", reply)
+            memory.append(user, "assistant", reply)
             chunks = split_reply(reply)
             for chunk in chunks:
                 send_presence(user, "composing")
@@ -71,23 +77,43 @@ def health():
     return "ok"
 
 
+def handle_media(number: str, msg: dict) -> None:
+    """Baixa o arquivo para arquivos/<numero>/ e entra no buffer junto com a legenda."""
+    got = download_media(msg.get("messageid") or msg["id"], os.path.join("arquivos", number))
+    if not got:
+        return
+    path, mime = got
+    print(f"[media] user={number} mime={mime} file={os.path.basename(path)}")
+    with _files_lock:
+        _pending_files[number].append(got)
+    caption = msg.get("text") or ""
+    buffer.add(number, f"{caption}\n[arquivo enviado: {os.path.basename(path)}]".strip())
+
+
 @app.post("/webhook")
 def webhook():
     payload = request.get_json(silent=True) or {}
-    data = payload.get("data") or {}
+    msg = payload.get("message") or {}
+    if payload.get("token") and payload["token"] != INSTANCE_TOKEN:  # webhook global: outra instância do servidor
+        return jsonify({"ok": True})
     if (
-        payload.get("event") != "message"
-        or data.get("fromMe")
-        or data.get("isGroup")
-        or data.get("type") != "text"
-        or not data.get("body")
-        or not data.get("from")
+        payload.get("EventType") != "messages"
+        or msg.get("fromMe")
+        or msg.get("isGroup")
+        or not msg.get("chatid")
     ):
         return jsonify({"ok": True})
-    number = data["from"].split("@")[0]
-    print(f"[webhook] message user={number}")
-    threading.Thread(target=mark_read, args=(number, data.get("id", "")), daemon=True).start()  # não bloqueia
-    buffer.add(number, data["body"])
+    number = msg["chatid"].split("@")[0]
+    msg_id = msg.get("messageid") or msg.get("id", "")
+    if msg.get("messageType") in TEXT_TYPES:
+        if not msg.get("text"):
+            return jsonify({"ok": True})
+        print(f"[webhook] text user={number}")
+        buffer.add(number, msg["text"])
+    else:  # qualquer outro tipo: tenta baixar como mídia (pdf/imagem); sem mídia, ignora
+        print(f"[webhook] media? user={number} type={msg.get('messageType')} mediaType={msg.get('mediaType')}")
+        threading.Thread(target=handle_media, args=(number, msg), daemon=True).start()
+    threading.Thread(target=mark_read, args=(msg_id,), daemon=True).start()  # não bloqueia
     return jsonify({"ok": True})
 
 
