@@ -16,6 +16,7 @@ from uazapi import download_media, mark_read, send_presence, send_text  # noqa: 
 
 BUFFER_SECONDS = float(os.getenv("BUFFER_SECONDS", "8"))
 SYSTEM_PROMPT = os.getenv("SYSTEM_PROMPT", "Você é um assistente útil. Seja breve.").replace("\\n", "\n")
+ERROR_MESSAGE = os.getenv("ERROR_MESSAGE", "Desculpe, tive um problema para responder agora. Pode repetir em alguns instantes?")
 PORT = int(os.getenv("PORT", "5000"))
 INSTANCE_TOKEN = os.getenv("UAZAPI_INSTANCE_TOKEN", "")
 
@@ -55,6 +56,7 @@ def handle_flush(user: str, texts: list[str]) -> None:
             reply = llm.generate_reply(memory.get(user), SYSTEM_PROMPT, files=files)
             print(f"[llm] reply len={len(reply)}")
             if not reply:
+                send_text(user, ERROR_MESSAGE)
                 return
             memory.append(user, "assistant", reply)
             chunks = split_reply(reply)
@@ -65,6 +67,7 @@ def handle_flush(user: str, texts: list[str]) -> None:
             print(f"[send] user={user} msgs={len(chunks)}")
         except Exception as e:  # não derruba a thread do timer
             print(f"[flush] erro user={user}: {e}")
+            send_text(user, ERROR_MESSAGE)  # o cliente não fica sem resposta
         finally:
             send_presence(user, "paused")
 
