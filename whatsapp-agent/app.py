@@ -14,7 +14,8 @@ import memory  # noqa: E402
 from buffer import MessageBuffer  # noqa: E402
 from uazapi import download_media, mark_read, send_presence, send_text  # noqa: E402
 
-BUFFER_SECONDS = float(os.getenv("BUFFER_SECONDS", "8"))
+BUFFER_SECONDS = float(os.getenv("BUFFER_SECONDS", "4"))
+TYPING_DELAY_MAX = float(os.getenv("TYPING_DELAY_MAX", "2"))  # teto do "digitando" entre partes; 0 desliga
 SYSTEM_PROMPT = os.getenv("SYSTEM_PROMPT", "Você é um assistente útil. Seja breve.").replace("\\n", "\n")
 ERROR_MESSAGE = os.getenv("ERROR_MESSAGE", "Desculpe, tive um problema para responder agora. Pode repetir em alguns instantes?")
 PORT = int(os.getenv("PORT", "5000"))
@@ -53,16 +54,18 @@ def handle_flush(user: str, texts: list[str]) -> None:
             with _files_lock:
                 files = _pending_files.pop(user, [])
             memory.append(user, "user", "\n".join(texts))  # arquivos só vão no turno atual; o histórico guarda o texto
+            start = time.time()
             reply = llm.generate_reply(memory.get(user), SYSTEM_PROMPT, files=files)
-            print(f"[llm] reply len={len(reply)}")
+            print(f"[llm] reply len={len(reply)} em {time.time() - start:.1f}s")
             if not reply:
                 send_text(user, ERROR_MESSAGE)
                 return
             memory.append(user, "assistant", reply)
             chunks = split_reply(reply)
-            for chunk in chunks:
-                send_presence(user, "composing")
-                time.sleep(1 + len(chunk) / 200)
+            for i, chunk in enumerate(chunks):
+                if i:  # a 1ª parte sai na hora: o "digitando" já apareceu enquanto o modelo pensava
+                    send_presence(user, "composing")
+                    time.sleep(min(1 + len(chunk) / 200, TYPING_DELAY_MAX))
                 send_text(user, chunk)
             print(f"[send] user={user} msgs={len(chunks)}")
         except Exception as e:  # não derruba a thread do timer
