@@ -41,6 +41,20 @@ Pronto: mande uma mensagem de outro número para o WhatsApp da instância.
 > Endpoints usados (doc oficial): `POST /send/text`, `POST /message/presence`, `POST /message/markread`.
 > O `llms-uazapi.txt` desta pasta está desatualizado em vários deles; na dúvida, vale a doc em https://docs.uazapi.com/llms.txt.
 
+## PDFs e imagens
+Mensagens que não são texto (PDF, imagem) são baixadas com `POST /message/download` para `arquivos/<numero>/`
+(a pasta está no `.gitignore`: são documentos de clientes) e enviadas ao modelo junto com o texto do mesmo buffer.
+O arquivo vai só no turno em que chegou; o histórico guarda o texto e a resposta do modelo.
+Áudio ainda não é tratado (precisaria de transcrição).
+
+## Gemini x Claude
+`LLM_PROVIDER=gemini` ou `claude` no `.env` (Claude exige `ANTHROPIC_API_KEY`; modelo em `CLAUDE_MODEL`).
+Para comparar nos mesmos documentos, com as duas chaves preenchidas:
+```bash
+python compare.py ./amostras "Resuma este documento e liste valores e datas"
+```
+Imprime a resposta e o tempo de cada provedor, arquivo por arquivo.
+
 ## Como funciona
 `POST /webhook` (`EventType=messages`) → ignora `fromMe`, grupos e tipos diferentes de texto → `mark_read` → buffer por
 usuário (espera `BUFFER_SECONDS` desde a última mensagem) → `flush`: `composing`, histórico,

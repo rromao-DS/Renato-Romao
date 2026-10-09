@@ -7,12 +7,12 @@ _lock = threading.Lock()
 
 
 def append(user: str, role: str, text: str) -> None:
-    """role: 'user' ou 'model' (formato nativo do Gemini)."""
+    """role: 'user' ou 'assistant'. Formato neutro; cada provedor em llm.py converte."""
     with _lock:
         msgs = _history.setdefault(user, [])
-        msgs.append({"role": role, "parts": [{"text": text}]})
+        msgs.append({"role": role, "text": text})
         del msgs[:-MAX_HISTORY]
-        while msgs and msgs[0]["role"] != "user":  # Gemini espera começar por 'user'
+        while msgs and msgs[0]["role"] != "user":  # as APIs esperam começar por 'user'
             msgs.pop(0)
 
 
