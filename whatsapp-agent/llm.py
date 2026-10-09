@@ -1,5 +1,6 @@
 import functools
 import os
+import time
 
 PROVIDER = os.getenv("LLM_PROVIDER", "gemini")  # "gemini" ou "claude"
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
@@ -23,9 +24,17 @@ def generate_reply(history: list[dict], system: str, files: list | None = None,
                    tools: list | None = None, provider: str | None = None) -> str:
     """history: [{"role": "user"|"assistant", "text": str}], o último é o turno atual.
     files: [(caminho, mimetype)] anexados ao último turno. tools=None hoje (function calling depois)."""
-    if (provider or PROVIDER) == "claude":
-        return _claude(history, system, files or [], tools)
-    return _gemini(history, system, files or [], tools)
+    call = _claude if (provider or PROVIDER) == "claude" else _gemini
+    for attempt in range(3):  # 429/5xx/529 costumam ser picos temporários do provedor
+        try:
+            return call(history, system, files or [], tools)
+        except Exception as e:
+            code = getattr(e, "code", None) or getattr(e, "status_code", None)
+            if attempt == 2 or code not in (429, 500, 503, 529):
+                raise
+            wait = 3 * (attempt + 1)
+            print(f"[llm] erro {code}, tentando de novo em {wait}s")
+            time.sleep(wait)
 
 
 def _gemini(history, system, files, tools):
