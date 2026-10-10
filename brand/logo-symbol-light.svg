@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <!-- R2 Tech "A Ponte" — símbolo fundo claro (geometria exata do Brand Book) -->
+  <rect x="20" y="85" width="70" height="70" fill="#080C14"/>
+  <rect x="150" y="85" width="70" height="70" fill="#080C14"/>
+  <line x1="90" y1="125" x2="150" y2="101" stroke="#080C14" stroke-width="15" stroke-linecap="round"/>
+</svg>

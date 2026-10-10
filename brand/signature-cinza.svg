@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 118" width="980" height="236">
+  <rect width="490" height="118" fill="#9AA3AD"/>
+  <svg x="20" y="14" width="80" height="34" viewBox="10 78 220 94"><rect x="20" y="85" width="70" height="70" fill="#080C14"/><rect x="150" y="85" width="70" height="70" fill="#080C14"/><line x1="90" y1="125" x2="150" y2="101" stroke="#080C14" stroke-width="15" stroke-linecap="round"/></svg>
+  <text x="60" y="58" font-family="Arial,sans-serif" font-size="6.5" font-weight="700" fill="#2C3E50" text-anchor="middle" letter-spacing="1.2">R2 TECH CONSULTING</text>
+  <line x1="112" y1="10" x2="112" y2="74" stroke="rgba(0,0,0,.15)" stroke-width="1"/>
+  <text x="124" y="34" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#080C14">Renato Romão</text>
+  <text x="124" y="50" font-family="Arial,sans-serif" font-size="8.5" font-weight="500" fill="#2C3E50" letter-spacing="1.4">FUNDADOR &amp; CONSULTOR</text>
+  <line x1="20" y1="82" x2="470" y2="82" stroke="rgba(0,0,0,.15)" stroke-width="1"/>
+  <text x="20" y="96" font-family="Arial,sans-serif" font-size="10.5" fill="#2C3E50">r2techconsultoria@gmail.com</text>
+  <text x="20" y="111" font-family="Arial,sans-serif" font-size="10.5" fill="#2C3E50">+55 21 9 7040-8313</text>
+  <text x="176" y="111" font-family="Arial,sans-serif" font-size="10.5" fill="rgba(0,0,0,.15)">·</text>
+  <text x="190" y="111" font-family="Arial,sans-serif" font-size="10.5" fill="#080C14" opacity="0.75">linkedin.com/in/renato-romao</text>
+</svg>
